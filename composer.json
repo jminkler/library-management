@@ -9,10 +9,10 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
-        "eventsauce/eventsauce": "^0.6.0",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.0",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "spatie/laravel-event-projector": "^3.0.0"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

@@ -10,8 +10,8 @@ use Ramsey\Uuid\Uuid;
 
 class Book extends Model
 {
-    protected $fillable = ['isbn'];
-    
+    protected $fillable = ['isbn', 'uuid'];
+
     public static function createWithAttributes(array $attributes): Book
     {
         $attributes['uuid'] = (string) Uuid::uuid4();

@@ -13,10 +13,15 @@ class BookTest extends TestCase
 
     public function testCreateABook()
     {
+        $isbn = $this->faker->isbn13;
         $attributes = [
-            'isbn' => $this->faker->isbn13
+            'isbn' => $isbn
         ];
 
         $obj = Book::createWithAttributes($attributes);
+
+        $this->assertEquals($isbn, $obj->isbn);
+        $this->assertTrue(isset($obj->uuid));
+        
     }
 }

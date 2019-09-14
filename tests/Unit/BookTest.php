@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class BookTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use WithFaker;
 
     public function testCreateABook()
     {
@@ -22,6 +22,5 @@ class BookTest extends TestCase
 
         $this->assertEquals($isbn, $obj->isbn);
         $this->assertTrue(isset($obj->uuid));
-        
     }
 }

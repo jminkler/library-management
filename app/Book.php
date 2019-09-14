@@ -21,7 +21,7 @@ class Book extends Model
         return static::uuid($attributes['uuid']);
     }
 
-    public function addDescription(string $description, string $language)
+    public function addDescription(string $description, string $language = 'en')
     {
         event(new DescriptionAdded($this->uuid, $description, $language));
     }

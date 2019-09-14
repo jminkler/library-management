@@ -10,7 +10,7 @@ use Ramsey\Uuid\Uuid;
 
 class Book extends Model
 {
-    protected $fillable = ['isbn', 'uuid'];
+    protected $fillable = ['isbn', 'uuid', 'title'];
 
     public static function createWithAttributes(array $attributes): Book
     {

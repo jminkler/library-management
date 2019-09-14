@@ -14,7 +14,8 @@ class BookTest extends TestCase
     {
         $isbn = $this->faker->isbn13;
         $attributes = [
-            'isbn' => $isbn
+            'isbn' => $isbn,
+            'title' => $this->faker->sentence(),
         ];
 
         $obj = Book::createWithAttributes($attributes);
@@ -27,7 +28,8 @@ class BookTest extends TestCase
     {
         $isbn = $this->faker->isbn13;
         $attributes = [
-            'isbn' => $isbn
+            'isbn' => $isbn,
+            'title' => $this->faker->sentence(),
         ];
 
         $obj = Book::createWithAttributes($attributes);

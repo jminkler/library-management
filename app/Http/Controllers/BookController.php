@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Book;
+use App\PopularBook;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -14,7 +15,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        return view('book.index');
+        $recent = Book::latest()->take(10)->get();
+
+        return view('book.index', compact('recent'));
     }
 
     /**

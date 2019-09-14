@@ -24,7 +24,7 @@ class CreateBookRequest extends FormRequest
     public function rules()
     {
         return [
-            'isbn' => 'required|isbn',
+            'isbn' => 'required|isbn|unique:books,isbn',
             'title' => 'required',
         ];
     }

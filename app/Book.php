@@ -4,7 +4,8 @@ namespace App;
 
 use App\Events\BookCreated;
 use App\Events\DescriptionAdded;
-use App\Events\DescriptionCreated;
+use App\Events\BookWasCheckedOut;
+use App\Events\BookWasCheckedIn;
 use App\Events\AuthorAdded;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
@@ -46,9 +47,28 @@ class Book extends Model
         event(new AuthorAdded($this->uuid, $author));
     }
 
+    public static function checkout(string $isbn)
+    {
+        $book = self::isbn($isbn);
+
+        event(new BookWasCheckedOut($book->uuid));
+    }
+
+    public static function checkin(string $isbn)
+    {
+        $book = self::isbn($isbn);
+
+        event(new BookWasCheckedIn($book->uuid));
+    }
+
     public static function uuid(string $uuid): ?Book
     {
         return static::where('uuid', $uuid)->first();
+    }
+
+    public static function isbn(string $isbn): ?Book
+    {
+        return static::where('isbn', $isbn)->first();
     }
 
     public function descriptions()
@@ -60,5 +80,5 @@ class Book extends Model
     {
         return $this->belongsToMany(Author::class);
     }
-    
+
 }

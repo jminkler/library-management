@@ -2,10 +2,12 @@
 
 namespace App\Projectors;
 
+use App\Status;
 use App\Author;
 use App\Book;
 use App\BookDescription;
 use App\Events\BookCreated;
+use App\Events\BookWasCheckedOut;
 use App\Events\DescriptionAdded;
 use App\Events\AuthorAdded;
 use Spatie\EventProjector\Projectors\Projector;
@@ -17,7 +19,13 @@ final class BookProjector implements Projector
 
     public function onBookCreated(BookCreated $event)
     {
-        Book::create($event->bookAttributes);
+        $book = Book::create($event->bookAttributes);
+
+        Status::createWithAttributes([
+            'book_id' => $book->id,
+            'status' => Status::IN,
+            'user_id' => auth()->user() ? auth()->user()->id : 0,
+        ]);
     }
 
     public function onDescriptionAdded(DescriptionAdded $event)
@@ -38,6 +46,28 @@ final class BookProjector implements Projector
         Author::createWithAttributes([
             'book_id' => $book->id,
             'name' => $event->name,
+        ]);
+    }
+
+    public function onBookWasCheckedOut(BookWasCheckedOut $event)
+    {
+        $book = Book::uuid($event->uuid);
+
+        Status::createWithAttributes([
+            'book_id' => $book->id,
+            'status' => Status::OUT,
+            'user_id' => auth()->user() ? auth()->user()->id : 0,
+        ]);
+    }
+
+    public function onBookWasCheckedIn(BookWasCheckedIn $event)
+    {
+        $book = Book::uuid($event->uuid);
+
+        Status::createWithAttributes([
+            'book_id' => $book->id,
+            'status' => Status::IN,
+            'user_id' => auth()->user() ? auth()->user()->id : 0,
         ]);
     }
 }

@@ -19,7 +19,21 @@ class BookController extends Controller
     public function store(CreateBookRequest $request)
     {
         $book = Book::createWithAttributes($request->all());
-        
+
+        return $this->response->withItem($book, new BookTransformer);
+    }
+
+    public function checkout(CheckBookRequest $request)
+    {
+        $book = Book::checkout($request->isbn);
+
+        return $this->response->withItem($book, new BookTransformer);
+    }
+
+    public function checkin(CheckBookRequest $request)
+    {
+        $book = Book::checkin($request->isbn);
+
         return $this->response->withItem($book, new BookTransformer);
     }
 }

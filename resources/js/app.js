@@ -19,8 +19,29 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+import Home from './pages/Home'
+import AddBook from './pages/AddBook'
+import CheckBook from './pages/CheckBook'
+import Status from './pages/Status'
 
+import Vuex from 'vuex'
+import VueRouter from 'vue-router'
+
+Vue.use(Vuex)
+Vue.use(VueRouter)
+
+import store from './store/index.js'
+
+
+const routes = [
+    { path: '/add', component: AddBook, name: 'add-book' },
+    { path: '/check-book', component: CheckBook, name: 'check-book' },
+    { path: '/status', component: Status, name: 'status' },
+]
+
+const router = new VueRouter({
+    routes // short for `routes: routes`
+})
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -28,5 +49,10 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app',
+    el: '#main-app',
+    components: {
+        Home
+    },
+    store,
+    router
 });

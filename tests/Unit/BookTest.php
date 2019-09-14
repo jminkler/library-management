@@ -41,10 +41,16 @@ class BookTest extends TestCase
             'This is the test description', 'en'
         );
 
+        $obj->addAuthor($this->faker->name);
+
         $this->assertDatabaseHas('book_descriptions', [
             'book_id' => $obj->id,
             'description' => 'This is the test description',
             'language' => 'en',
         ]);
+
+        $this->assertTrue($obj->descriptions->count() == 1, 'Has one description');
+        
+        $this->assertTrue($obj->authors->count() == 1, 'Has one Author');
     }
 }

@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "ellipsesynergie/api-response": "^0.16.0",
         "fideloper/proxy": "^4.0",
         "intervention/validation": "^1.4",
         "laravel/framework": "^6.0",
@@ -21,6 +22,7 @@
         "facade/ignition": "^1.4",
         "fzaninotto/faker": "^1.4",
         "laravel-frontend-presets/tailwindcss": "^2.0",
+        "laravel/dusk": "^5.5",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^3.0",
         "phpunit/phpunit": "^8.0"

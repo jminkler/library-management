@@ -14,18 +14,58 @@ class CreateABookTest extends TestCase
     {
         $user = factory(User::class)->create();
 
-        $response = $this->actingAs($user)->json('POST', '/api/book', [
+        $response = $this->actingAs($user)->post('/api/books', [
             'isbn' => $this->faker->isbn13,
             'title' => $this->faker->sentence(),
         ]);
         
         
-        $response->assertStatus(200)->dump()
-        
+        $response->assertStatus(200)
             ->assertJsonStructure([
-                'title',
-                'isbn',
-                'uuid',
+                'data' => [
+                    'id',
+                    'title',
+                    'isbn',
+                    'descriptions' => [
+                        'data'
+                    ]
+                ]
+            ]);
+    }
+
+    public function testCreateBookWithDescriptionsAndAuthors()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->actingAs($user)->post('/api/books', [
+            'isbn' => $this->faker->isbn13,
+            'title' => $this->faker->sentence(),
+            'descriptions' => [
+                [
+                    'description' => 'This is a book description',
+                    'language' => 'en'
+                ],
+                [
+                    'description' => 'Esta es una descripción del libro.',
+                    'language' => 'es'
+                ]
+            ]
+        ]);
+        
+        
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => [
+                    'id',
+                    'title',
+                    'isbn',
+                    'descriptions' => [
+                        'data' => [
+                            0,
+                            1,
+                        ]
+                    ]
+                ]
             ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App;
 
 use App\Events\BookCreated;
 use App\Events\DescriptionAdded;
+use App\Events\DescriptionCreated;
 use App\Events\AuthorAdded;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
@@ -18,7 +19,21 @@ class Book extends Model
 
         event(new BookCreated($attributes));
 
-        return static::uuid($attributes['uuid']);
+        $book = static::uuid($attributes['uuid']);
+
+        if (isset($attributes['descriptions'])) {
+            foreach ($attributes['descriptions'] as $description) {
+                $book->addDescription($description['description'], $description['language']);
+            }
+        }
+
+        if (isset($attributes['authors'])) {
+            foreach ($attributes['authors'] as $author) {
+                $book->addAuthor($author->name);
+            }
+        }
+
+        return $book;
     }
 
     public function addDescription(string $description, string $language = 'en')
@@ -35,4 +50,15 @@ class Book extends Model
     {
         return static::where('uuid', $uuid)->first();
     }
+
+    public function descriptions()
+    {
+        return $this->hasMany(BookDescription::class);
+    }
+
+    public function authors()
+    {
+        return $this->belongsToMany(Author::class);
+    }
+    
 }

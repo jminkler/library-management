@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Library Management'),
 
     /*
     |--------------------------------------------------------------------------
@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        EllipseSynergie\ApiResponse\Laravel\ResponseServiceProvider::class,
 
         /*
          * Application Service Providers...

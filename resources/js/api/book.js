@@ -1,5 +1,9 @@
 import axios from 'axios'
 
+/**
+ * API for Laravel API Backend
+ * Returns Promises
+ */
 export default {
     addBook(attributes) {
         return axios.post('/api/books', attributes)
@@ -15,6 +19,8 @@ export default {
     },
     getBookStatuses(payload) {
         return axios.get('/api/books', {params: payload})
+    },
+    delete(isbn) {
+        return axios.delete('/api/books/' + isbn)
     }
-
 }

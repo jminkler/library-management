@@ -10,7 +10,9 @@ const state = {
     statusPagination: {},
     bookstatuserrors: [],
     bookStatuses: [],
-    bookPagination: {}
+    bookPagination: {},
+    deletedBook: {},
+    deleteerrors: [],
 };
 
 const getters = {};
@@ -52,10 +54,23 @@ const actions = {
             .catch(error => {
                 commit('bookstatuserrors', error.response.data.errors)
             })
+    },
+    deleteBook({commit, dispatch}, isbn) {
+        book.delete(isbn)
+            .then(r => (commit('setDeletedBook', r.data)))
+            .catch(error => {
+                commit('deleteerrors', error.response.data.errors)
+            })
     }
 };
 
 const mutations = {
+    setDeletedBook(state, book) {
+        state.deletedBook = book
+    },
+    deleteerrors(state, errors) {
+        state.deleteerrors = errors
+    },
     setBookStatuses(state, status) {
         state.bookStatuses = status.data;
         state.bookPagination = status.meta.pagination

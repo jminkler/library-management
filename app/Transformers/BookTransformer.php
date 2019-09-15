@@ -9,7 +9,7 @@ use League\Fractal;
 class BookTransformer extends Fractal\TransformerAbstract
 {
     protected $defaultIncludes = [
-        'descriptions'
+        'descriptions', 'authors'
     ];
 
     public function transform(Book $book) : array

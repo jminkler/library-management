@@ -5,11 +5,7 @@ namespace App\Projectors;
 use App\Author;
 use App\Book;
 use App\BookDescription;
-use App\Events\AuthorAdded;
-use App\Events\BookCreated;
-use App\Events\BookWasCheckedIn;
-use App\Events\BookWasCheckedOut;
-use App\Events\DescriptionAdded;
+use App\Events;
 use App\Status;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
@@ -18,7 +14,7 @@ final class BookProjector implements Projector
 {
     use ProjectsEvents;
 
-    public function onBookCreated(BookCreated $event)
+    public function onBookCreated(Events\BookCreated $event)
     {
         $book = Book::create($event->bookAttributes);
 
@@ -29,7 +25,13 @@ final class BookProjector implements Projector
         ]);
     }
 
-    public function onDescriptionAdded(DescriptionAdded $event)
+    public function onBookDeleted(Events\BookDeleted $event)
+    {
+        $book = Book::uuid($event->uuid);
+        $book->delete();
+    }
+
+    public function onDescriptionAdded(Events\DescriptionAdded $event)
     {
         $book = Book::uuid($event->uuid);
 
@@ -40,7 +42,7 @@ final class BookProjector implements Projector
         ]);
     }
 
-    public function onAuthorAdded(AuthorAdded $event)
+    public function onAuthorAdded(Events\AuthorAdded $event)
     {
         $book = Book::uuid($event->uuid);
 
@@ -50,7 +52,7 @@ final class BookProjector implements Projector
         ]);
     }
 
-    public function onBookWasCheckedOut(BookWasCheckedOut $event)
+    public function onBookWasCheckedOut(Events\BookWasCheckedOut $event)
     {
         $book = Book::uuid($event->uuid);
 
@@ -61,7 +63,7 @@ final class BookProjector implements Projector
         ]);
     }
 
-    public function onBookWasCheckedIn(BookWasCheckedIn $event)
+    public function onBookWasCheckedIn(Events\BookWasCheckedIn $event)
     {
         $book = Book::uuid($event->uuid);
 

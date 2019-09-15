@@ -4,6 +4,7 @@ namespace App;
 
 use App\Events\AuthorAdded;
 use App\Events\BookCreated;
+use App\Events\BookDeleted;
 use App\Events\BookWasCheckedIn;
 use App\Events\BookWasCheckedOut;
 use App\Events\DescriptionAdded;
@@ -30,11 +31,16 @@ class Book extends Model
 
         if (isset($attributes['authors'])) {
             foreach ($attributes['authors'] as $author) {
-                $book->addAuthor($author->name);
+                $book->addAuthor($author);
             }
         }
 
         return $book;
+    }
+
+    public function remove()
+    {
+        event(new BookDeleted($this));
     }
 
     public function addDescription(string $description, string $language = 'en')
@@ -85,4 +91,8 @@ class Book extends Model
         return $this->belongsToMany(Author::class);
     }
 
+    public function getRouteKeyName()
+    {
+        return 'isbn';
+    }
 }

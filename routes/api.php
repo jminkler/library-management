@@ -23,3 +23,5 @@ Route::get('/statuses/', 'StatusController@index');
 Route::post('/books', 'BookController@store');
 Route::post('/books/checkout', 'BookController@checkout');
 Route::post('/books/checkin', 'BookController@checkin');
+
+Route::delete('/books/{book}', 'BookController@destroy');

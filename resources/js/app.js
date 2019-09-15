@@ -20,6 +20,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 import Home from './pages/Home'
+import Books from './pages/Books'
 import AddBook from './pages/AddBook'
 import CheckBook from './pages/CheckBook'
 import StatusPage from './pages/StatusPage'
@@ -33,6 +34,7 @@ Vue.use(VueRouter);
 
 
 const routes = [
+    {path: '/books', component: Books, name: 'books'},
     { path: '/add', component: AddBook, name: 'add-book' },
     { path: '/check-book', component: CheckBook, name: 'check-book' },
     {path: '/status', component: StatusPage, name: 'status'},

@@ -2,11 +2,11 @@
 
 namespace App;
 
-use App\Events\BookCreated;
-use App\Events\DescriptionAdded;
-use App\Events\BookWasCheckedOut;
-use App\Events\BookWasCheckedIn;
 use App\Events\AuthorAdded;
+use App\Events\BookCreated;
+use App\Events\BookWasCheckedIn;
+use App\Events\BookWasCheckedOut;
+use App\Events\DescriptionAdded;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
 
@@ -52,6 +52,8 @@ class Book extends Model
         $book = self::isbn($isbn);
 
         event(new BookWasCheckedOut($book->uuid));
+
+        return $book;
     }
 
     public static function checkin(string $isbn)
@@ -59,6 +61,8 @@ class Book extends Model
         $book = self::isbn($isbn);
 
         event(new BookWasCheckedIn($book->uuid));
+
+        return $book;
     }
 
     public static function uuid(string $uuid): ?Book

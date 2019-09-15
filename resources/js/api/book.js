@@ -9,6 +9,12 @@ export default {
     },
     checkin(isbn) {
         return axios.post('/api/books/checkin', {isbn: isbn})
+    },
+    getStatuses(payload) {
+        return axios.get('/api/statuses', {params: payload})
+    },
+    getBookStatuses(payload) {
+        return axios.get('/api/books', {params: payload})
     }
 
 }

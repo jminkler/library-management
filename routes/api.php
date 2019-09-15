@@ -17,6 +17,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/books', 'BookController@index');
+Route::get('/statuses/', 'StatusController@index');
+
 Route::post('/books', 'BookController@store');
 Route::post('/books/checkout', 'BookController@checkout');
 Route::post('/books/checkin', 'BookController@checkin');

@@ -4,9 +4,6 @@ namespace App\Transformers;
 
 
 use App\Book;
-use App\BookDescription;
-use App\Transformers\AuthorTransformer;
-use App\Transformers\DescriptionTransformer;
 use League\Fractal;
 
 class BookTransformer extends Fractal\TransformerAbstract
@@ -21,6 +18,7 @@ class BookTransformer extends Fractal\TransformerAbstract
 	        'id'      => (int) $book->id,
 	        'title'   => $book->title,
 	        'isbn'    => $book->isbn,
+            'status' => $book->status,
             'links'   => [
                 [
                     'rel' => 'self',
@@ -43,4 +41,5 @@ class BookTransformer extends Fractal\TransformerAbstract
 
         return $this->collection($descriptions, new DescriptionTransformer);
     }
+
 }

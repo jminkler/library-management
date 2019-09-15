@@ -3,8 +3,8 @@
 namespace Tests\Unit;
 
 use App\Book;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class BookTest extends TestCase
 {
@@ -70,6 +70,11 @@ class BookTest extends TestCase
 
         $this->assertDatabaseHas('statuses', [
             'book_id' => $obj->id,
+            'status' => 'OUT'
+        ]);
+
+        $this->assertDatabaseHas('books', [
+            'id' => $obj->id,
             'status' => 'OUT'
         ]);
     }

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateBooksTable extends Migration
 {
@@ -18,6 +18,7 @@ class CreateBooksTable extends Migration
             $table->string('uuid');
             $table->string('title');
             $table->string('isbn');
+            $table->string('status')->default('IN');
             $table->timestamps();
         });
     }

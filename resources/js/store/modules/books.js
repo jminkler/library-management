@@ -4,38 +4,72 @@ const state = {
     createdBook: {},
     errors: [],
     checkerrors: [],
-    message: ''
-}
+    message: '',
+    statuserrors: [],
+    latestStatuses: [],
+    statusPagination: {},
+    bookstatuserrors: [],
+    bookStatuses: [],
+    bookPagination: {}
+};
 
-const getters = {
-
-}
+const getters = {};
 
 const actions = {
     addBook({commit}, attributes) {
-        commit('errors', [])
-        commit('message', '')
+        commit('errors', []);
+        commit('message', '');
         book.addBook(attributes)
             .then(r =>  ( commit('createdBook', r.data) ))
             .catch(error => { commit('errors', error.response.data.errors) })
     },
     checkout({commit}, isbn) {
-        commit('checkerrors', [])
-        commit('message', '')
+        commit('checkerrors', []);
+        commit('message', '');
         book.checkout(isbn)
             .then(r =>  ( commit('message', r.message) ))
             .catch(error => { commit('checkerrors', error.response.data.errors) })
     },
     checkin({commit}, isbn) {
-        commit('checkerrors', [])
-        commit('message', '')
+        commit('checkerrors', []);
+        commit('message', '');
         book.checkin(isbn)
             .then(r =>  ( commit('message', r.message) ))
             .catch(error => { commit('checkerrors', error.response.data.errors) })
+    },
+    getStatuses({commit}, payload) {
+        commit('statuserrors', []);
+        book.getStatuses(payload)
+            .then(r => (commit('setStatuses', r.data)))
+            .catch(error => {
+                commit('statuserrors', error.response.data.errors)
+            })
+    },
+    getBookStatuses({commit}, payload) {
+        commit('bookstatuserrors', []);
+        book.getBookStatuses(payload)
+            .then(r => (commit('setBookStatuses', r.data)))
+            .catch(error => {
+                commit('bookstatuserrors', error.response.data.errors)
+            })
     }
-}
+};
 
 const mutations = {
+    setBookStatuses(state, status) {
+        state.bookStatuses = status.data;
+        state.bookPagination = status.meta.pagination
+    },
+    bookstatuserrors(state, errors) {
+        state.bookstatuserrors = errors
+    },
+    setStatuses(state, status) {
+        state.latestStatuses = status.data;
+        state.statusPagination = status.meta.pagination
+    },
+    statuserrors(state, errors) {
+        state.statuserrors = errors
+    },
     createdBook(state, book) {
         state.createdBook = book
     },
@@ -48,7 +82,7 @@ const mutations = {
     message(state, message) {
         state.message = message
     }
-}
+};
 
 export default {
     state,

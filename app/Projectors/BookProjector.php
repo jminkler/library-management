@@ -2,14 +2,15 @@
 
 namespace App\Projectors;
 
-use App\Status;
 use App\Author;
 use App\Book;
 use App\BookDescription;
+use App\Events\AuthorAdded;
 use App\Events\BookCreated;
+use App\Events\BookWasCheckedIn;
 use App\Events\BookWasCheckedOut;
 use App\Events\DescriptionAdded;
-use App\Events\AuthorAdded;
+use App\Status;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
 

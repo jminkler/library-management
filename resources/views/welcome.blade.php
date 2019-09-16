@@ -85,8 +85,7 @@
                 </div>
 
                 <div class="links">
-                    <a href="/books">Books</a>
-                    <a href="/authors">Authors</a>
+                    <a href="/books">View Our Books</a>
                 </div>
             </div>
         </div>

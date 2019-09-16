@@ -6,7 +6,7 @@
             Total Pages: {{ pagination.total_pages }}
         </h4>
         <div class="list-group">
-            <div class="list-group-item" v-for="status in latestStatuses">
+            <div @click="go(status.book.data.isbn)" class="list-group-item" v-for="status in latestStatuses">
                 <span :class="status.status == 'IN' ? 'badge-success' : 'badge-warning'" class="badge">{{ status.status }}</span>
                 {{ status.book.data.isbn }}
             </div>
@@ -51,6 +51,12 @@
                 this.getStatuses({
                     page: this.page,
                     perPage: this.perPage
+                })
+            },
+            go(isbn) {
+                this.$router.push({
+                    name: 'view-book',
+                    params: {isbn: isbn}
                 })
             }
         },

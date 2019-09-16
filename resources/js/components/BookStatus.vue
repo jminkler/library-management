@@ -3,7 +3,7 @@
         <h3>Books</h3>
         <pagination-status :pagination="pagination"></pagination-status>
         <div class="list-group">
-            <div class="list-group-item" v-for="book in bookStatuses">
+            <div @click="go(book.isbn)" class="list-group-item" v-for="book in bookStatuses">
                 <span :class="book.status == 'IN' ? 'badge-success' : 'badge-warning'" class="badge">
                     {{ book.status }}
                 </span> {{ book.isbn }}
@@ -51,6 +51,12 @@
                 this.getBookStatuses({
                     page: this.page,
                     perPage: this.perPage
+                })
+            },
+            go(isbn) {
+                this.$router.push({
+                    name: 'view-book',
+                    params: {isbn: isbn}
                 })
             }
         },

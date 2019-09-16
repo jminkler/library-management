@@ -56,7 +56,7 @@
         </div>
 
         <button @click="addABook" class="btn btn-primary">Add Book</button>
-        <div v-if="created">{{ created }}</div>
+
     </div>
 </template>
 
@@ -74,6 +74,11 @@
                 authorToAdd: '',
                 descriptionToAdd: '',
                 descriptionLang: 'en'
+            }
+        },
+        watch: {
+            created: function () {
+                this.$router.push({name: 'books'})
             }
         },
         computed: {

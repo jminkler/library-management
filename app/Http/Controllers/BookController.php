@@ -15,7 +15,11 @@ class BookController extends Controller
      */
     public function index()
     {
-        $recent = Book::latest()->take(10)->get();
+        $recent = Book::with([
+            'descriptions' => function ($q) {
+                $q->whereLanguage('en');
+            }
+        ])->latest()->take(10)->get();
 
         return view('book.index', compact('recent'));
     }

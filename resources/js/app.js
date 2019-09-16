@@ -35,10 +35,11 @@ Vue.use(VueRouter);
 
 
 const routes = [
+    {path: '/', redirect: '/books'},
     {path: '/books', component: Books, name: 'books'},
     {path: '/book/:isbn', component: ViewBook, name: 'view-book'},
-    { path: '/add', component: AddBook, name: 'add-book' },
-    { path: '/check-book', component: CheckBook, name: 'check-book' },
+    {path: '/add', component: AddBook, name: 'add-book'},
+    {path: '/check-book', component: CheckBook, name: 'check-book'},
     {path: '/status', component: StatusPage, name: 'status'},
 ];
 

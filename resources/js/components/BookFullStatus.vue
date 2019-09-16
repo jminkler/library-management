@@ -1,7 +1,10 @@
 <template>
     <div class="">
         <h3>Books</h3>
+        <router-link :to="{name: 'add-book'}" class="btn btn-outline-primary mb-2">Add A Book</router-link>
+
         <pagination-status :pagination="pagination"/>
+
         <div class="list-group">
             <div class="list-group-item" v-for="book in bookStatuses">
                 <div class="d-flex flex-row">

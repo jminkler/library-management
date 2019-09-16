@@ -6,6 +6,15 @@ Installation
 
 ``composer install``
 
+Copy .env
+
+``cp .env.example .env``
+
+Run docker
+
+``docker-compose up -d``
+
+
 ``npm run dev``
 
 Run tests

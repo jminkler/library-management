@@ -2532,6 +2532,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2542,10 +2573,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       edit: {
-        title: false,
-        authors: false,
-        descriptions: false
-      }
+        title: false
+      },
+      authorToAdd: '',
+      descToAdd: '',
+      descLangToAdd: 'en'
     };
   },
   watch: {
@@ -2553,6 +2585,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$router.push({
         name: 'books'
       });
+      this.authorToAdd = '';
+      this.descToAdd = '';
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
@@ -2563,6 +2597,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return state.books.deletedBook;
     }
   }), {
+    isbn: function isbn() {
+      return this.book.data.isbn;
+    },
     title: function title() {
       return this.book.data.title;
     },
@@ -2575,14 +2612,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     descriptions: function descriptions() {
       return this.book.data.descriptions.data;
+    },
+    authorsData: function authorsData() {
+      return this.book.data.authors.data;
     }
   }),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['getBook', 'saveBook', 'saveAuthors', 'saveDescriptions']), {
-    toggleTitle: function toggleTitle() {
-      this.edit.title = !this.edit.title;
-    },
-    toggleAuthors: function toggleAuthors() {
-      this.edit.authors = !this.edit.authors;
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['getBook', 'saveBook', 'addAuthorToBook', 'addDescToBook', 'removeAuthor', 'removeDesc']), {
+    toggle: function toggle(key) {
+      this.edit[key] = !this.edit[key];
     },
     save: function save() {
       this.saveBook(this.book);
@@ -2590,14 +2627,42 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     updateAuthors: function updateAuthors() {
       this.saveAuthors({
-        isbn: this.book.data.isbn,
-        authors: this.book.data.authors.data
+        isbn: this.isbn,
+        authors: this.authorsData
       });
       this.resetEditing();
     },
     updateDescriptions: function updateDescriptions() {
-      this.saveDescriptions(this.book.data.descriptions);
+      this.saveDescriptions({
+        isbn: this.isbn,
+        descriptions: this.descriptions
+      });
       this.resetEditing();
+    },
+    addAuthor: function addAuthor() {
+      this.addAuthorToBook({
+        isbn: this.book.data.isbn,
+        author: this.authorToAdd
+      });
+    },
+    addDesc: function addDesc() {
+      this.addDescToBook({
+        isbn: this.book.data.isbn,
+        description: this.descToAdd,
+        language: this.descLangToAdd
+      });
+    },
+    delAuthor: function delAuthor(id) {
+      this.removeAuthor({
+        isbn: this.book.data.isbn,
+        author: id
+      });
+    },
+    delDesc: function delDesc(id) {
+      this.removeDesc({
+        isbn: this.book.data.isbn,
+        description: id
+      });
     },
     resetEditing: function resetEditing() {
       this.edit.title = false;
@@ -38838,7 +38903,10 @@ var render = function() {
     _vm.status == "IN"
       ? _c(
           "button",
-          { staticClass: "btn btn-warning", on: { click: _vm.checkoutBook } },
+          {
+            staticClass: "btn btn-outline-danger",
+            on: { click: _vm.checkoutBook }
+          },
           [_vm._v("Check Out")]
         )
       : _vm._e(),
@@ -38846,7 +38914,10 @@ var render = function() {
     _vm.status == "OUT"
       ? _c(
           "button",
-          { staticClass: "btn btn-primary", on: { click: _vm.checkinBook } },
+          {
+            staticClass: "btn btn-outline-primary",
+            on: { click: _vm.checkinBook }
+          },
           [_vm._v("Check In")]
         )
       : _vm._e(),
@@ -39445,10 +39516,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/ViewBook.vue?vue&type=template&id=01e3d2b7&scoped=true&":
-/*!******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/ViewBook.vue?vue&type=template&id=01e3d2b7&scoped=true& ***!
-  \******************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/ViewBook.vue?vue&type=template&id=01e3d2b7&":
+/*!******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/ViewBook.vue?vue&type=template&id=01e3d2b7& ***!
+  \******************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -39461,114 +39532,229 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.book.data
-    ? _c(
-        "div",
-        [
-          !_vm.edit.title
-            ? _c("h3", { on: { click: _vm.toggleTitle } }, [
-                _vm._v("\n        " + _vm._s(_vm.title) + "\n    ")
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.edit.title
-            ? _c("h3", [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.book.data.title,
-                      expression: "book.data.title"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  domProps: { value: _vm.book.data.title },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+    ? _c("div", { staticClass: "d-flex flex-row" }, [
+        _c(
+          "div",
+          { staticClass: "w-25 mr-4" },
+          [
+            !_vm.edit.title
+              ? _c(
+                  "h4",
+                  {
+                    on: {
+                      click: function($event) {
+                        return _vm.toggle("title")
                       }
-                      _vm.$set(_vm.book.data, "title", $event.target.value)
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  { staticClass: "btn btn-secondary", on: { click: _vm.save } },
-                  [_vm._v("Save")]
+                  },
+                  [_vm._v("\n            " + _vm._s(_vm.title) + "\n        ")]
                 )
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          !_vm.edit.authors
-            ? _c("h3", { on: { click: _vm.toggleAuthors } }, [
-                _vm.authors.length
-                  ? _c("small", { staticClass: "text-muted" }, [
-                      _vm._v(
-                        "\n            By: " +
-                          _vm._s(_vm.authors.join(", ")) +
-                          "\n        "
-                      )
-                    ])
-                  : _vm._e()
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.edit.authors
-            ? _c(
-                "h3",
-                [
-                  _vm._l(_vm.book.data.authors.data, function(author, key) {
-                    return _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.book.data.authors.data[key].name,
-                          expression: "book.data.authors.data[key].name"
-                        }
-                      ],
-                      domProps: { value: _vm.book.data.authors.data[key].name },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.book.data.authors.data[key],
-                            "name",
-                            $event.target.value
-                          )
-                        }
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.edit.title
+              ? _c("h3", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.book.data.title,
+                        expression: "book.data.title"
                       }
-                    })
+                    ],
+                    staticClass: "form-control",
+                    domProps: { value: _vm.book.data.title },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.book.data, "title", $event.target.value)
+                      }
+                    }
                   }),
                   _vm._v(" "),
-                  _c("button", { on: { click: _vm.updateAuthors } }, [
-                    _vm._v("Save")
-                  ])
-                ],
-                2
-              )
-            : _vm._e(),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      on: { click: _vm.save }
+                    },
+                    [_vm._v("Save")]
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("h5", [
+              _vm._v("\n            " + _vm._s(_vm.isbn) + "\n        ")
+            ]),
+            _vm._v(" "),
+            _c("book-buttons", {
+              attrs: { book: _vm.book.data, showView: false }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-25 mr-4" }, [
+          _c("h4", [_vm._v("Authors:")]),
           _vm._v(" "),
-          _c("book-buttons", {
-            attrs: { book: _vm.book.data, showView: false }
-          }),
-          _vm._v("\n    " + _vm._s(_vm.book.status) + "\n    "),
-          _vm._l(_vm.descriptions, function(desc) {
-            return _c("div", { staticClass: "mt-4" }, [
-              _c("h4", { staticClass: "badge badge-primary" }, [
-                _vm._v(_vm._s(desc.language))
-              ]),
-              _vm._v(" "),
-              _c("p", [_vm._v("desc.description")])
-            ])
-          })
-        ],
-        2
-      )
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            _vm._l(_vm.authorsData, function(author, key) {
+              return _c(
+                "div",
+                {
+                  key: author.id,
+                  staticClass: "list-group-item d-flex flex-row"
+                },
+                [
+                  _c("div", [_vm._v(_vm._s(author.name))]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-danger ml-auto",
+                      on: {
+                        click: function($event) {
+                          return _vm.delAuthor(author.id)
+                        }
+                      }
+                    },
+                    [_vm._v("\n                    Remove\n                ")]
+                  )
+                ]
+              )
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", [_vm._v("New Author")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.authorToAdd,
+                  expression: "authorToAdd"
+                }
+              ],
+              domProps: { value: _vm.authorToAdd },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.authorToAdd = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("button", { on: { click: _vm.addAuthor } }, [_vm._v("Add")])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-50" }, [
+          _c("h4", [_vm._v("Descriptions:")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "list-group" },
+            _vm._l(_vm.descriptions, function(desc, key) {
+              return _c(
+                "div",
+                { key: desc.id, staticClass: "mb-4 list-group-item" },
+                [
+                  _c("h4", { staticClass: "badge badge-primary" }, [
+                    _vm._v(_vm._s(desc.language))
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v(_vm._s(desc.description))]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-danger",
+                      on: {
+                        click: function($event) {
+                          return _vm.delDesc(desc.id)
+                        }
+                      }
+                    },
+                    [_vm._v("Remove")]
+                  )
+                ]
+              )
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", [_vm._v("New Description")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.descLangToAdd,
+                    expression: "descLangToAdd"
+                  }
+                ],
+                staticClass: "form-control",
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.descLangToAdd = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "en" } }, [_vm._v("English")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "es" } }, [_vm._v("Spanish")])
+              ]
+            ),
+            _vm._v(" "),
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.descToAdd,
+                  expression: "descToAdd"
+                }
+              ],
+              staticClass: "form-control",
+              domProps: { value: _vm.descToAdd },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.descToAdd = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("button", { on: { click: _vm.addDesc } }, [_vm._v("Add")])
+          ])
+        ])
+      ])
     : _vm._e()
 }
 var staticRenderFns = []
@@ -55690,11 +55876,17 @@ __webpack_require__.r(__webpack_exports__);
   saveBook: function saveBook(book) {
     return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/api/books/' + book.data.isbn, book.data);
   },
-  saveAuthors: function saveAuthors(book) {
-    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/api/books/' + book.isbn + '/authors', book.authors);
+  saveAuthor: function saveAuthor(payload) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/books/' + payload.isbn + '/authors', payload);
   },
-  saveDescriptions: function saveDescriptions(book) {
-    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/api/books/' + book.data.isbn + '/descriptions', book.data);
+  saveDescriptions: function saveDescriptions(payload) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/books/' + payload.isbn + '/descriptions', payload);
+  },
+  removeAuthor: function removeAuthor(payload) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]('/api/books/' + payload.isbn + '/authors/' + payload.author);
+  },
+  removeDesc: function removeDesc(payload) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]('/api/books/' + payload.isbn + '/descriptions/' + payload.description);
   }
 });
 
@@ -56633,7 +56825,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ViewBook_vue_vue_type_template_id_01e3d2b7_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ViewBook.vue?vue&type=template&id=01e3d2b7&scoped=true& */ "./resources/js/pages/ViewBook.vue?vue&type=template&id=01e3d2b7&scoped=true&");
+/* harmony import */ var _ViewBook_vue_vue_type_template_id_01e3d2b7___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ViewBook.vue?vue&type=template&id=01e3d2b7& */ "./resources/js/pages/ViewBook.vue?vue&type=template&id=01e3d2b7&");
 /* harmony import */ var _ViewBook_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ViewBook.vue?vue&type=script&lang=js& */ "./resources/js/pages/ViewBook.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
@@ -56645,11 +56837,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _ViewBook_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ViewBook_vue_vue_type_template_id_01e3d2b7_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ViewBook_vue_vue_type_template_id_01e3d2b7_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _ViewBook_vue_vue_type_template_id_01e3d2b7___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ViewBook_vue_vue_type_template_id_01e3d2b7___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "01e3d2b7",
+  null,
   null
   
 )
@@ -56675,19 +56867,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/pages/ViewBook.vue?vue&type=template&id=01e3d2b7&scoped=true&":
-/*!************************************************************************************!*\
-  !*** ./resources/js/pages/ViewBook.vue?vue&type=template&id=01e3d2b7&scoped=true& ***!
-  \************************************************************************************/
+/***/ "./resources/js/pages/ViewBook.vue?vue&type=template&id=01e3d2b7&":
+/*!************************************************************************!*\
+  !*** ./resources/js/pages/ViewBook.vue?vue&type=template&id=01e3d2b7& ***!
+  \************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewBook_vue_vue_type_template_id_01e3d2b7_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ViewBook.vue?vue&type=template&id=01e3d2b7&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/ViewBook.vue?vue&type=template&id=01e3d2b7&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewBook_vue_vue_type_template_id_01e3d2b7_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewBook_vue_vue_type_template_id_01e3d2b7___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ViewBook.vue?vue&type=template&id=01e3d2b7& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/ViewBook.vue?vue&type=template&id=01e3d2b7&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewBook_vue_vue_type_template_id_01e3d2b7___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewBook_vue_vue_type_template_id_01e3d2b7_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewBook_vue_vue_type_template_id_01e3d2b7___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -56818,17 +57010,33 @@ var actions = {
       commit('errors', error.response.data.errors);
     });
   },
-  saveAuthors: function saveAuthors(_ref9, updated) {
+  addAuthorToBook: function addAuthorToBook(_ref9, updated) {
     var commit = _ref9.commit;
-    _api_book__WEBPACK_IMPORTED_MODULE_0__["default"].saveAuthors(updated).then(function (r) {
+    _api_book__WEBPACK_IMPORTED_MODULE_0__["default"].saveAuthor(updated).then(function (r) {
       return commit('setCurrentBook', r.data);
     })["catch"](function (error) {
       commit('errors', error.response.data.errors);
     });
   },
-  saveDescriptions: function saveDescriptions(_ref10, updated) {
+  addDescToBook: function addDescToBook(_ref10, updated) {
     var commit = _ref10.commit;
     _api_book__WEBPACK_IMPORTED_MODULE_0__["default"].saveDescriptions(updated).then(function (r) {
+      return commit('setCurrentBook', r.data);
+    })["catch"](function (error) {
+      commit('errors', error.response.data.errors);
+    });
+  },
+  removeAuthor: function removeAuthor(_ref11, updated) {
+    var commit = _ref11.commit;
+    _api_book__WEBPACK_IMPORTED_MODULE_0__["default"].removeAuthor(updated).then(function (r) {
+      return commit('setCurrentBook', r.data);
+    })["catch"](function (error) {
+      commit('errors', error.response.data.errors);
+    });
+  },
+  removeDesc: function removeDesc(_ref12, updated) {
+    var commit = _ref12.commit;
+    _api_book__WEBPACK_IMPORTED_MODULE_0__["default"].removeDesc(updated).then(function (r) {
       return commit('setCurrentBook', r.data);
     })["catch"](function (error) {
       commit('errors', error.response.data.errors);

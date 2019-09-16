@@ -33,26 +33,6 @@ class Book extends Model
         return self::uuid($uuid);
     }
 
-    public static function updateAuthors(string $uuid, array $attributes): Book
-    {
-        event(new Events\BookAuthorsUpdated($uuid, $attributes));
-
-        return self::uuid($uuid);
-    }
-
-    public static function updateDescriptions(string $uuid, array $attributes): Book
-    {
-        event(new Events\BookDescriptionsUpdated($uuid, $attributes));
-
-        return self::uuid($uuid);
-    }
-
-
-    /**
-     * @param array $attributes
-     * @param Book|null $book
-     * @return void
-     */
     protected static function addDescriptions(array $attributes, Book $book): void
     {
         if (isset($attributes['descriptions'])) {
@@ -66,10 +46,6 @@ class Book extends Model
         }
     }
 
-    /**
-     * @param array $attributes
-     * @param Book|null $book
-     */
     protected static function addAuthors(array $attributes, Book $book): void
     {
         if (isset($attributes['authors'])) {
@@ -99,6 +75,16 @@ class Book extends Model
     public function addAuthor(string $author)
     {
         event(new Events\AuthorAdded($this->uuid, $author));
+    }
+
+    public function removeDescription(BookDescription $description)
+    {
+        event(new Events\DescriptionRemoved($this->uuid, $description->id));
+    }
+
+    public function removeAuthor(Author $author)
+    {
+        event(new Events\AuthorRemoved($this->uuid, $author->id));
     }
 
     public static function checkout(string $isbn)

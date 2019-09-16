@@ -77,20 +77,34 @@ const actions = {
                 commit('errors', error.response.data.errors)
             })
     },
-    saveAuthors({commit}, updated) {
-        book.saveAuthors(updated)
+    addAuthorToBook({commit}, updated) {
+        book.saveAuthor(updated)
             .then(r => (commit('setCurrentBook', r.data)))
             .catch(error => {
                 commit('errors', error.response.data.errors)
             })
     },
-    saveDescriptions({commit}, updated) {
+    addDescToBook({commit}, updated) {
         book.saveDescriptions(updated)
             .then(r => (commit('setCurrentBook', r.data)))
             .catch(error => {
                 commit('errors', error.response.data.errors)
             })
-    }
+    },
+    removeAuthor({commit}, updated) {
+        book.removeAuthor(updated)
+            .then(r => (commit('setCurrentBook', r.data)))
+            .catch(error => {
+                commit('errors', error.response.data.errors)
+            })
+    },
+    removeDesc({commit}, updated) {
+        book.removeDesc(updated)
+            .then(r => (commit('setCurrentBook', r.data)))
+            .catch(error => {
+                commit('errors', error.response.data.errors)
+            })
+    },
 };
 
 const mutations = {

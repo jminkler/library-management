@@ -29,10 +29,16 @@ export default {
     saveBook(book) {
         return axios.put('/api/books/' + book.data.isbn, book.data)
     },
-    saveAuthors(book) {
-        return axios.put('/api/books/' + book.isbn + '/authors', book.authors)
+    saveAuthor(payload) {
+        return axios.post('/api/books/' + payload.isbn + '/authors', payload)
     },
-    saveDescriptions(book) {
-        return axios.put('/api/books/' + book.data.isbn + '/descriptions', book.data)
+    saveDescriptions(payload) {
+        return axios.post('/api/books/' + payload.isbn + '/descriptions', payload)
+    },
+    removeAuthor(payload) {
+        return axios.delete('/api/books/' + payload.isbn + '/authors/' + payload.author)
+    },
+    removeDesc(payload) {
+        return axios.delete('/api/books/' + payload.isbn + '/descriptions/' + payload.description)
     }
 }

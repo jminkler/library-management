@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Author;
 use App\Book;
+use App\BookDescription;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CheckBookRequest;
 use App\Http\Requests\CreateBookRequest;
@@ -52,16 +54,30 @@ class BookController extends Controller
         return $this->response->withItem($book, new BookTransformer);
     }
 
-    public function updateAuthors(Book $book, Request $request)
+    public function addAuthor(Book $book, Request $request)
     {
-        $book = Book::updateAuthors($book->uuid, $request->all());
+        $book->addAuthor($request->author);
 
         return $this->response->withItem($book, new BookTransformer);
     }
 
-    public function updateDescriptions(Book $book, Request $request)
+    public function addDescription(Book $book, Request $request)
     {
-        $book = Book::updateDescriptions($book->uuid, $request->all());
+        $book->addDescription($request->description, $request->language);
+
+        return $this->response->withItem($book, new BookTransformer);
+    }
+
+    public function removeAuthor(Book $book, Author $author)
+    {
+        $book->removeAuthor($author);
+
+        return $this->response->withItem($book, new BookTransformer);
+    }
+
+    public function removeDescription(Book $book, BookDescription $description)
+    {
+        $book->removeDescription($description);
 
         return $this->response->withItem($book, new BookTransformer);
     }

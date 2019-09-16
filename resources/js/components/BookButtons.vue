@@ -1,8 +1,8 @@
 <template>
     <div>
         <button @click="view" class="btn btn-secondary" v-if="showView">View / Edit</button>
-        <button @click="checkoutBook" class="btn btn-warning" v-if="status == 'IN'">Check Out</button>
-        <button @click="checkinBook" class="btn btn-primary" v-if="status == 'OUT'">Check In</button>
+        <button @click="checkoutBook" class="btn btn-outline-danger" v-if="status == 'IN'">Check Out</button>
+        <button @click="checkinBook" class="btn btn-outline-primary" v-if="status == 'OUT'">Check In</button>
         <button @click="deleteBook" class="btn btn-danger">Delete</button>
     </div>
 </template>

@@ -6,7 +6,6 @@ use App\Author;
 use App\Book;
 use App\BookDescription;
 use App\Events;
-use App\Events\AuthorUpdated;
 use App\Status;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
@@ -45,22 +44,6 @@ final class BookProjector implements Projector
 
     }
 
-    public function onBookAuthorsUpdated(Events\BookAuthorsUpdated $event)
-    {
-        $book = Book::uuid($event->uuid);
-        foreach ($event->attributes as $author) {
-            event(new AuthorUpdated($author['uuid'], $author['name']));
-        }
-        $book->update($event->attributes);
-
-    }
-
-    public function onBookDescriptionsUpdated(Events\BookDescriptionsUpdated $event)
-    {
-        $book = Book::uuid($event->uuid);
-        $book->update($event->attributes);
-
-    }
 
     public function onDescriptionAdded(Events\DescriptionAdded $event)
     {
@@ -81,6 +64,17 @@ final class BookProjector implements Projector
             'book_id' => $book->id,
             'name' => $event->name,
         ]);
+    }
+
+    public function onDescriptionRemoved(Events\DescriptionRemoved $event)
+    {
+        BookDescription::find($event->description)->delete();
+    }
+
+    public function onAuthorRemoved(Events\AuthorRemoved $event)
+    {
+        $book = Book::uuid($event->uuid);
+        $book->authors()->detach($event->author);
     }
 
     public function onBookWasCheckedOut(Events\BookWasCheckedOut $event)

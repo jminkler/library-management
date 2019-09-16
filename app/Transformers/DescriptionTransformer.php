@@ -8,11 +8,13 @@ use League\Fractal;
 class DescriptionTransformer extends Fractal\TransformerAbstract
 {
 
-    public function transform(BookDescription $bookDescription) : array
+    public function transform(BookDescription $desc): array
     {
         return [
-            'description' => $bookDescription->description,
-            'language' => $bookDescription->language,
+            'id' => $desc->id,
+            'uuid' => $desc->uuid,
+            'description' => $desc->description,
+            'language' => $desc->language,
         ];
     }
 }

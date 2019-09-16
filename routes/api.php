@@ -27,5 +27,8 @@ Route::post('/books/checkin', 'BookController@checkin');
 
 Route::delete('/books/{book}', 'BookController@destroy');
 Route::put('/books/{book}', 'BookController@update');
-Route::put('/books/{book}/authors', 'BookController@updateAuthors');
-Route::put('/books/{book}/descriptions', 'BookController@updateDescriptions');
+Route::post('/books/{book}/authors', 'BookController@addAuthor');
+Route::post('/books/{book}/descriptions', 'BookController@addDescription');
+
+Route::delete('/books/{book}/authors/{author}', 'BookController@removeAuthor');
+Route::delete('/books/{book}/descriptions/{description}', 'BookController@removeDescription');

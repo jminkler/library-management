@@ -23,4 +23,6 @@ Run tests (creates some books)
 ``./vendor/bin/phpunit``
 
 
+Browse to 
 
+``http://localhost:8000``

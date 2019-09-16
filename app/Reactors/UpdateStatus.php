@@ -13,7 +13,8 @@ final class UpdateStatus implements EventHandler
 
     public function onStatusCreated(StatusCreated $event)
     {
-        $book = Book::find($event->attributes['book_id']);
+        $book = Book::withTrashed()
+            ->find($event->attributes['book_id']);
         $book->status = $event->attributes['status'];
         $book->save();
     }

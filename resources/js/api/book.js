@@ -22,5 +22,17 @@ export default {
     },
     delete(isbn) {
         return axios.delete('/api/books/' + isbn)
+    },
+    get(isbn) {
+        return axios.get('/api/books/' + isbn)
+    },
+    saveBook(book) {
+        return axios.put('/api/books/' + book.data.isbn, book.data)
+    },
+    saveAuthors(book) {
+        return axios.put('/api/books/' + book.isbn + '/authors', book.authors)
+    },
+    saveDescriptions(book) {
+        return axios.put('/api/books/' + book.data.isbn + '/descriptions', book.data)
     }
 }

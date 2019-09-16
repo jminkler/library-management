@@ -4,7 +4,7 @@
         <pagination-status :pagination="pagination"></pagination-status>
         <div class="list-group">
             <div class="list-group-item" v-for="book in bookStatuses">
-                <span :class="book.status == 'IN' ? 'badge-success' : 'badge-warning'" class="badge w-25">
+                <span :class="book.status == 'IN' ? 'badge-success' : 'badge-warning'" class="badge">
                     {{ book.status }}
                 </span> {{ book.isbn }}
             </div>

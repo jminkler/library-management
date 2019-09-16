@@ -10,6 +10,7 @@ class Status extends Model
 {
     const OUT = 'OUT';
     const IN = 'IN';
+    const DESTROYED = 'DESTROYED';
 
     protected $fillable = ['uuid', 'status', 'user_id', 'book_id'];
 

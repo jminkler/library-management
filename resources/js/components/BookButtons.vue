@@ -1,8 +1,8 @@
 <template>
     <div>
-        <button @click="view" class="btn btn-secondary">View / Edit</button>
-        <button @click="checkoutBook" class="btn btn-warning" v-if="book.status == 'IN'">CheckOut</button>
-        <button @click="checkinBook" class="btn btn-primary" v-if="book.status == 'OUT'">Check In</button>
+        <button @click="view" class="btn btn-secondary" v-if="showView">View / Edit</button>
+        <button @click="checkoutBook" class="btn btn-warning" v-if="status == 'IN'">Check Out</button>
+        <button @click="checkinBook" class="btn btn-primary" v-if="status == 'OUT'">Check In</button>
         <button @click="deleteBook" class="btn btn-danger">Delete</button>
     </div>
 </template>
@@ -11,11 +11,17 @@
 
     export default {
         name: 'book-buttons',
-        props: ['book'],
+        props: ['book', 'showView'],
+        computed: {
+            status() {
+                return this.book.status ? this.book.status : 'IN'
+            }
+        },
         methods: {
-            ...mapActions(['checkout', 'checkin']),
+            ...mapActions(['checkout', 'checkin', 'removeBook']),
             deleteBook() {
-                if (confirm("Are you sure?")) {
+                let del = confirm("Are you sure?");
+                if (del) {
                     this.removeBook(this.book.isbn)
                 }
             },
@@ -23,7 +29,7 @@
                 this.$router.push({
                     name: 'view-book',
                     params: {
-                        id: this.book.id
+                        isbn: this.book.isbn
                     }
                 })
             },

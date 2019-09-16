@@ -22,7 +22,7 @@
                             </div>
                         </div>
                     </div>
-                    <book-buttons :book="book"/>
+                    <book-buttons :book="book" :show-view="true"/>
                 </div>
             </div>
         </div>

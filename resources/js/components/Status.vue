@@ -7,7 +7,7 @@
         </h4>
         <div class="list-group">
             <div class="list-group-item" v-for="status in latestStatuses">
-                <span :class="status.status == 'IN' ? 'badge-success' : 'badge-warning'" class="badge w-25">{{ status.status }}</span>
+                <span :class="status.status == 'IN' ? 'badge-success' : 'badge-warning'" class="badge">{{ status.status }}</span>
                 {{ status.book.data.isbn }}
             </div>
         </div>

@@ -22,7 +22,7 @@ class StatusTransformer extends Fractal\TransformerAbstract
 
     public function includeBook($status)
     {
-        $book = Book::find($status->book_id);
+        $book = Book::withTrashed()->find($status->book_id);
 
         return $this->item($book, new BookTransformer);
     }

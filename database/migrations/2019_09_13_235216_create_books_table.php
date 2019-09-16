@@ -20,6 +20,7 @@ class CreateBooksTable extends Migration
             $table->string('isbn');
             $table->string('status')->default('IN');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

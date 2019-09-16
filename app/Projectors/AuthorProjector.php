@@ -15,4 +15,11 @@ final class AuthorProjector implements Projector
     {
         $author = Author::create($event->attributes);
     }
+
+    public function onAuthorUpdated(AuthorUpdated $event)
+    {
+        $author = Author::uuid($event->uuid);
+        $author->name = $event->name;
+        $author->save();
+    }
 }

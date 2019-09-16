@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/books', 'BookController@index');
+Route::get('/books/{book}', 'BookController@show');
 Route::get('/statuses/', 'StatusController@index');
 
 Route::post('/books', 'BookController@store');
@@ -25,3 +26,6 @@ Route::post('/books/checkout', 'BookController@checkout');
 Route::post('/books/checkin', 'BookController@checkin');
 
 Route::delete('/books/{book}', 'BookController@destroy');
+Route::put('/books/{book}', 'BookController@update');
+Route::put('/books/{book}/authors', 'BookController@updateAuthors');
+Route::put('/books/{book}/descriptions', 'BookController@updateDescriptions');

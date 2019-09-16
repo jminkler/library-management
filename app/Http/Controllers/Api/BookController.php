@@ -40,6 +40,40 @@ class BookController extends Controller
         return $this->response->withItem($book, new BookTransformer);
     }
 
+    public function show(Book $book)
+    {
+        return $this->response->withItem($book, new BookTransformer);
+    }
+
+    public function update(Book $book, Request $request)
+    {
+        $book = Book::updateWithAttributes($book->uuid, $request->all());
+
+        return $this->response->withItem($book, new BookTransformer);
+    }
+
+    public function updateAuthors(Book $book, Request $request)
+    {
+        $book = Book::updateAuthors($book->uuid, $request->all());
+
+        return $this->response->withItem($book, new BookTransformer);
+    }
+
+    public function updateDescriptions(Book $book, Request $request)
+    {
+        $book = Book::updateDescriptions($book->uuid, $request->all());
+
+        return $this->response->withItem($book, new BookTransformer);
+    }
+
+
+    public function destroy(Book $book)
+    {
+        $book->remove();
+
+        return $this->response->withItem($book, new BookTransformer);
+    }
+
     public function checkout(CheckBookRequest $request)
     {
         $book = Book::checkout($request->isbn);

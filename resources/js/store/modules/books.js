@@ -13,6 +13,7 @@ const state = {
     bookPagination: {},
     deletedBook: {},
     deleteerrors: [],
+    currentBook: {}
 };
 
 const getters = {};
@@ -55,16 +56,47 @@ const actions = {
                 commit('bookstatuserrors', error.response.data.errors)
             })
     },
-    deleteBook({commit, dispatch}, isbn) {
+    removeBook({commit}, isbn) {
         book.delete(isbn)
             .then(r => (commit('setDeletedBook', r.data)))
             .catch(error => {
                 commit('deleteerrors', error.response.data.errors)
             })
+    },
+    getBook({commit}, id) {
+        book.get(id)
+            .then(r => (commit('setCurrentBook', r.data)))
+            .catch(error => {
+                commit('errors', error.response.data.errors)
+            })
+    },
+    saveBook({commit}, updated) {
+        book.saveBook(updated)
+            .then(r => (commit('setCurrentBook', r.data)))
+            .catch(error => {
+                commit('errors', error.response.data.errors)
+            })
+    },
+    saveAuthors({commit}, updated) {
+        book.saveAuthors(updated)
+            .then(r => (commit('setCurrentBook', r.data)))
+            .catch(error => {
+                commit('errors', error.response.data.errors)
+            })
+    },
+    saveDescriptions({commit}, updated) {
+        book.saveDescriptions(updated)
+            .then(r => (commit('setCurrentBook', r.data)))
+            .catch(error => {
+                commit('errors', error.response.data.errors)
+            })
     }
 };
 
 const mutations = {
+    setCurrentBook(state, book) {
+        state.currentBook = book;
+    },
     setDeletedBook(state, book) {
         state.deletedBook = book
     },

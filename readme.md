@@ -14,10 +14,11 @@ Run docker
 
 ``docker-compose up -d``
 
+Build assets
 
 ``npm run dev``
 
-Run tests
+Run tests (creates some books)
 
 ``./vendor/bin/phpunit``
 

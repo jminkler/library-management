@@ -1,6 +1,11 @@
 ### Library Book Management
 
+Little project did several years go for an interview ... 
+
+Wanted to play around with the Spatie Event Projector.  https://github.com/spatie/laravel-event-projector 
 Laravel app for keeping track of books using Event Projector, Vue
+
+
 
 Installation
 
